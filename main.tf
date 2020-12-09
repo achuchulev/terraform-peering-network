@@ -1,8 +1,17 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
 module "vpc_a" {
   source = "./modules/aws_vpc"
   
   providers = {
-    aws = aws.west
+    aws = aws.east
   }
 
   vpc_cidr_block         = var.requester_vpc_cidr_block
@@ -18,7 +27,7 @@ module "security_group_ssh_icmp_vpc_a" {
   source = "./modules/aws_security_group"
   
   providers = {
-    aws = aws.west
+    aws = aws.east
   }
   aws_vpc_id = module.vpc_a.vpc_id
 }
