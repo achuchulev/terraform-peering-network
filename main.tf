@@ -26,7 +26,7 @@ module "ec2_vpc_a" {
   
   ami = var.ami_a
   subnet_id = module.vpc_a.subnet_ids[0]
-  vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_a.id]
+  vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_a.sg_id]
   aws_key_pair_name = var.aws_key_pair_name_vpc_a
 }
 
@@ -58,7 +58,7 @@ module "ec2_vpc_b" {
   
   ami = var.ami_b
   subnet_id = module.vpc_b.subnet_ids[0]
-  vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_b.id]
+  vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_b.sg_id]
   aws_key_pair_name = var.aws_key_pair_name_b
 }
 
