@@ -9,10 +9,6 @@ terraform {
 
 module "vpc_a" {
   source = "./modules/aws_vpc"
-  
-  providers = {
-    aws = aws.east
-  }
 
   vpc_cidr_block         = var.requester_vpc_cidr_block
   vpc_subnet_cidr_blocks = var.requester_vpc_subnet_cidr_blocks
@@ -25,29 +21,22 @@ module "vpc_a" {
 
 module "security_group_ssh_icmp_vpc_a" {
   source = "./modules/aws_security_group"
-  
-  providers = {
-    aws = aws.east
-  }
-  aws_vpc_id = module.vpc_a.vpc_id
+
+  vpc_id = module.vpc_a.vpc_id
 }
 
 module "ec2_vpc_a" {
   source = "./modules/aws_ec2"
 
-  providers = {
-    aws = aws.west
-  }
-  
-  ami = var.ami_a
-  subnet_id = module.vpc_a.subnet_ids[0]
+  ami                    = var.ami_a
+  subnet_id              = module.vpc_a.subnet_ids[0]
   vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_a.sg_id]
-  aws_key_pair_name = var.aws_key_pair_name_vpc_a
+  aws_key_pair_name      = var.aws_key_pair_name_vpc_a
 }
 
 module "vpc_b" {
   source = "./modules/aws_vpc"
-  
+
   providers = {
     aws = aws.west
   }
@@ -67,45 +56,37 @@ module "security_group_ssh_icmp_vpc_b" {
   providers = {
     aws = aws.west
   }
-  
-  aws_vpc_id = module.vpc_b.vpc_id
+
+  vpc_id = module.vpc_b.vpc_id
 }
 
 module "ec2_vpc_b" {
   source = "./modules/aws_ec2"
-  
+
   providers = {
     aws = aws.west
   }
-  
-  ami = var.ami_b
-  subnet_id = module.vpc_b.subnet_ids[0]
+
+  ami                    = var.ami_b
+  subnet_id              = module.vpc_b.subnet_ids[0]
   vpc_security_group_ids = [module.security_group_ssh_icmp_vpc_b.sg_id]
-  aws_key_pair_name = var.aws_key_pair_name_b
+  aws_key_pair_name      = var.aws_key_pair_name_vpc_b
 }
 
 module "vpc_peering" {
   source = "./modules/vpc_peering"
 
   providers = {
-    aws = aws.east
-    aws = aws.west
+    aws      = aws
+    aws.west = aws.west
   }
 
   enabled = var.activate_peering
 
-  requester_aws_access_key = var.requester_aws_access_key
-  requester_aws_secret_key = var.requester_aws_secret_key
-  requester_region         = var.requester_region
-
-  accepter_aws_access_key = var.accepter_aws_access_key
-  accepter_aws_secret_key = var.accepter_aws_secret_key
-  accepter_region         = var.accepter_region
-
-  aws_token = var.aws_token
-
   requester_vpc_id = module.vpc_a.vpc_id
   accepter_vpc_id  = module.vpc_b.vpc_id
+
+  region_b = var.region_b
 
   requester_peer_tags = {
     Name = "VPC peering between ${module.vpc_a.vpc_name} and ${module.vpc_b.vpc_name}"

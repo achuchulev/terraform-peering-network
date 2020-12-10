@@ -1,12 +1,3 @@
-variable "requester_aws_access_key" {}
-variable "requester_aws_secret_key" {}
-variable "requester_region" {}
-variable "accepter_aws_access_key" {}
-variable "accepter_aws_secret_key" {}
-variable "accepter_region" {}
-variable "aws_token" {
-}
-
 variable "enabled" {
   description = "Set to false to prevent the module from creating or accessing any resources"
   default     = "true"
@@ -22,8 +13,8 @@ variable "requester_peer_tags" {
   description = "Requester peer tags"
 
   default = {
-    Side = "Requester"
-    Name = "VPC01-VPC02"
+    Side = "A"
+    Name = "VPCa-VPCb"
   }
 }
 
@@ -32,12 +23,16 @@ variable "accepter_peer_tags" {
   description = "Requester peer tags"
 
   default = {
-    Side = "Accepter"
-    Name = "VPC_A-VPC_B"
+    Side = "B"
+    Name = "VPCa-VPCb"
   }
 }
 
 variable "accepter_vpc_id" {
   type        = string
   description = "Accepter VPC ID"
+}
+
+variable "region_b" {
+
 }
