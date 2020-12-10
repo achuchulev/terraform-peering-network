@@ -8,14 +8,6 @@ output "vpc_b_id" {
   value = module.vpc_b.vpc_id
 }
 
-output "vpc_a_subnet_ids" {
-  value = module.vpc_a.subnet_ids
-}
-
-output "vpc_b_subnet_ids" {
-  value = module.vpc_b.subnet_ids
-}
-
 # ec2 module outputs
 output "ec2_vpc_a_public_ip" {
   value = module.ec2_vpc_a.public_ip
