@@ -1,22 +1,31 @@
-variable "requester_aws_access_key" {
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "aws_token" {}
+
+variable "region_a" {
+  default = "us-east-1"
 }
 
-variable "requester_aws_secret_key" {
+variable "region_b" {
+  default = "us-west-1"
 }
 
-variable "requester_region" {
+variable "ami_a" {
+  description = "Official Ubuntu 20.04 ami in us-east-1"
+  default     = "ami-0885b1f6bd170450c"
 }
 
-variable "accepter_aws_access_key" {
+variable "ami_b" {
+  description = "Official Ubuntu 20.04 ami in us-west-1"
+  default     = "ami-00831fc7c1e3ddc60"
 }
 
-variable "accepter_aws_secret_key" {
+variable "aws_key_pair_name_vpc_a" {
+  default = "atanas_key_pair"
 }
 
-variable "accepter_region" {
-}
-
-variable "aws_token" {
+variable "aws_key_pair_name_vpc_b" {
+  default = "atanas_key_pair"
 }
 
 variable "activate_peering" {
@@ -26,12 +35,12 @@ variable "activate_peering" {
 
 variable "requester_vpc_name" {
   description = "Set a VPC name"
-  default     = ""
+  default     = "A"
 }
 
 variable "accepter_vpc_name" {
   description = "Set a VPC name"
-  default     = ""
+  default     = "B"
 }
 
 variable "requester_vpc_cidr_block" {

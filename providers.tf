@@ -1,18 +1,18 @@
 provider "aws" {
-  region = var.requester_region
+  region = var.region_a
 
-  # Requester's credentials.
-  access_key = var.requester_aws_access_key
-  secret_key = var.requester_aws_secret_key
-  token = var.aws_token
+  # Region A credentials
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  token      = var.aws_token
 }
 
 provider "aws" {
   alias  = "west"
-  region = var.accepter_region
+  region = var.region_b
 
-  # Accepter's credentials.
-  access_key = var.accepter_aws_access_key
-  secret_key = var.accepter_aws_secret_key
-  token = var.aws_token
+  # Region B credentials
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  token      = var.aws_token
 }

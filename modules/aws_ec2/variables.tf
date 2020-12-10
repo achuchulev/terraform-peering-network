@@ -1,19 +1,3 @@
-variable "access_key" {
-  description = "AWS provider access key"
-}
-
-variable "secret_key" {
-  description = "AWS provider secret key"
-}
-
-variable "region" {
-  default     = "us-east-2"
-  description = "AWS region"
-}
-
-variable "aws_token" {
-}
-
 variable "ami" {
   description = "AWS AMI id"
 }
